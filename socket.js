@@ -8,7 +8,7 @@ let io;
 function initializeSocket(server) {
   io = socketIo(server, {
     cors: {
-      origin: "https://go-ride-nu.vercel.app", // Allow only your frontend
+      origin: process.env.FRONTEND_URL, // Allow only your frontend
       methods: ["GET", "POST"],
       allowedHeaders: ["Authorization", "Content-Type"]
       
