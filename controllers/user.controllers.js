@@ -38,7 +38,7 @@ module.exports.registerUser = async(req,res,next) => {
 module.exports.loginUser = async(req,res,next) => {
     const error = validationResult(req);
     if(!error.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
+        return res.status(400).json({errors: error.array()});
     }
 
    const {email,password} = req.body;
