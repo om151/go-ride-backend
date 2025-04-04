@@ -198,14 +198,20 @@ module.exports.endRide = async ({ rideId, captain }) => {
     throw new Error("Ride is not ongoing");
   }
 
-  await captainModel.findByIdAndUpdate({_id : captain._id},{totalEarning : captain.totalEarning + ride.fare})
 
-  await rideModel.findOneAndUpdate({ _id: rideId }, { status: "completed" });
 
   await captainModel.findByIdAndUpdate(
     { _id: captain._id },
-    { $push: { rideHistory: rideId } }
+    {
+      $push: { rideHistory: rideId },
+      $inc: { totalRide: 1, totalDistance: ride.distance,totalEarning : ride.fare , totalTime: ride.duration },
+      
+    }
   );
+
+  await rideModel.findOneAndUpdate({ _id: rideId }, { status: "completed" });
+
+  
 
   await userModel.findByIdAndUpdate(
     { _id: ride.user._id },

@@ -72,6 +72,18 @@ const captainSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    totalRide: {
+        type: Number,
+        default: 0
+    },
+    totalDistance: {
+        type: Number,
+        default: 0
+    },
+    totalTime: {
+        type: Number,
+        default: 0
+    },
     rideHistory: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ride'
