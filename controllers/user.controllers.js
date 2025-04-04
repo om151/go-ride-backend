@@ -63,7 +63,11 @@ module.exports.loginUser = async(req,res,next) => {
 }
 
 module.exports.getUserProfile = async(req,res,next) => {
-    res.status(200).json({user : req.user});
+    const user = await userModel.findById(req.user._id).populate({
+        path: 'rideHistory',
+        model: 'ride'
+    });
+    res.status(200).json({ user });
 }
 
 module.exports.logoutUser = async(req,res,next) => {

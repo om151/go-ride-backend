@@ -3,6 +3,7 @@ const rideModel = require("../models/ride.model");
 const { sendMessageToSocketId } = require("../socket");
 const mapService = require("./maps.service");
 const crypto = require("crypto");
+const userModel = require("../models/user.model");
 
 async function getFare(pickup, destination) {
   if (!pickup || !destination) {
@@ -97,6 +98,7 @@ module.exports.createRide = async ({
     fare: fare[vehicleType],
     distance: Math.round(distanceTime.distance),
     duration: distanceTime.duration,
+    createdAt: Date.now(),
   });
 
   return ride;
@@ -199,6 +201,17 @@ module.exports.endRide = async ({ rideId, captain }) => {
   await captainModel.findByIdAndUpdate({_id : captain._id},{totalEarning : captain.totalEarning + ride.fare})
 
   await rideModel.findOneAndUpdate({ _id: rideId }, { status: "completed" });
+
+  await captainModel.findByIdAndUpdate(
+    { _id: captain._id },
+    { $push: { rideHistory: rideId } }
+  );
+
+  await userModel.findByIdAndUpdate(
+    { _id: ride.user._id },
+    { $push: { rideHistory: rideId } }
+  );
+  
 
   return ride;
 };

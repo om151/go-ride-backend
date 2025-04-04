@@ -71,7 +71,11 @@ const captainSchema = new mongoose.Schema({
     totalEarning : {
         type: Number,
         default: 0
-    }
+    },
+    rideHistory: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ride'
+    }],
 })
 
 captainSchema.methods.generateAuthToken = function(){

@@ -55,6 +55,11 @@ const rideSchema = new mongoose.Schema({
         select : false,
         require : true,
     }
+    ,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 module.exports = mongoose.model("ride",rideSchema)
