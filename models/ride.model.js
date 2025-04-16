@@ -59,7 +59,11 @@ const rideSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    vehicleType: {
+        type: String,
+        enum: ['car', 'moto', 'auto']
+    },
 })
 
 module.exports = mongoose.model("ride",rideSchema)
