@@ -160,8 +160,7 @@ module.exports.startRide = async ({ rideId, otp, captain }) => {
   if (ride.otp !== otp) {
     throw new Error("Invalid OTP");
   }
-
-  await rideModel.findOneAndUpdate(
+   await rideModel.findOneAndUpdate(
     {
       _id: rideId,
     },
@@ -170,10 +169,9 @@ module.exports.startRide = async ({ rideId, otp, captain }) => {
     }
   );
 
-  sendMessageToSocketId(ride.user.socketId, {
-    event: "ride-started",
-    data: ride,
-  });
+  ride.status = "ongoing";
+
+  
   return ride;
 };
 
