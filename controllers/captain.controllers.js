@@ -70,11 +70,15 @@ module.exports.loginCaptain = async(req,res,next) => {
 
 module.exports.getCaptainProfile = async(req,res,next) => {
 
-    const captain = await captainModel.findById(req.captain._id).populate({
+    if(req?.captain._id){
+        const captain = await captainModel.findById(req.captain._id).populate({
             path: 'rideHistory',
             model: 'ride'
         });
     res.status(200).json({ captain});
+    }
+
+    
 }
 
 module.exports.logoutCaptain = async(req,res,next) => {
