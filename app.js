@@ -44,6 +44,10 @@ app.get("/", (req, res) => {
   res.send("GoRide backend live on DigitalOcean 🚀");
 });
 
+app.get("/test",(req,res) => {
+  res.sene("Testing....");
+})
+
 // ✅ API Routes
 app.use("/users", userRoutes);
 app.use("/captains", captainRoutes);
